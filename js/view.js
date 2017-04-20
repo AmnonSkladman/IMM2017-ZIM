@@ -105,7 +105,7 @@ var app = function (app) {
 
         // this function initiates the main interval
         p.startGame = function startGame() {
-            setInterval(animate, 2000);
+            setInterval(animate, 1000);
             setInterval(hitTest, 333.333);
             //BGmusic.play();
         };
