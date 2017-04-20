@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Drop</title>
+
+        <!-- Welcome to ZIM at http://zimjs.com - Code Interactive Media Pizzazz! 				-->
+        <!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS http://createjs.com -->
+        <!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+        <!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+        <!-- as of ZIM 4.3.0 load createjs namespace first -->
+        <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+        <script>var zon = true; // true for comments from zim code</script>
+        <script src="https://d309knd7es5f10.cloudfront.net/zim_4.9.0.js"></script><!-- add _doc to see code -->
+        <!-- use zimjs.com/code/distill for minified individual functions! -->
+        
+        <script>
+
+        // SCALING OPTIONS
+        // scaling can have values as follows with full being the default
+        // "fit"		sets canvas and stage to dimensions and scales to fit inside window size
+        // "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+        // "full"		sets stage to window size with no scaling
+        // "tagID"		add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+            
+        // Palette = http://www.colourlovers.com/palette/806215/Mountain_Spring
+
+        var scaling = "full"; // makes stage the window size but does not scale content
+        var width = null;
+        var height = null;
+        var color = "#340735";
+
+        var frame = new zim.Frame(scaling, width, height, color); // see docs for more options and info
+        frame.on("ready", function() {
+            zog("ready from ZIM Frame");
+        
+            var stage = frame.stage;
+            var stageW = frame.width;
+            var stageH = frame.height;
+            
+            var textArea = new zim.TextArea({
+                frame: frame,
+                readOnly: true,
+                width: 275,
+                height: 100,
+                placeholder: "Please click on the button to upload a picture, or drag one to it!"
+            })
+                .addTo(stage).pos(20, 20);
+//            textArea.text = "Please click on the button to upload a picture, or drag one to it!"
+            textArea.on("input", function(){zog(textArea.text)});
+            
+            var label = new zim.Label({
+                text: "Upload",
+                align: "center",
+                valign: "center",
+                color: "#A3C68C",
+                size: 24
+            });
+            
+            var loader = new zim.Loader({
+                frame: frame,
+                width: 250,
+                height: 100,
+                color: "rgba(255,255,255,0.25)",
+                label: label,
+                gloss: 0.05,
+                corner: 20,
+                gradient: 0.3,
+                dashed: false
+            })
+                .centerReg(stage);
+            loader.on("loaded", function(e){
+                for (var i = 0; i < e.bitmaps.length; i++) {
+                    e.bitmaps[i].centerReg(stage).drag();
+                };
+//                zim.loop(e.bitmaps, function(bitmap) {
+//                   bitmap.centerReg(stage).drag(); 
+//                });
+//                e.bitmap.centerReg(stage).drag();
+                loader.removeFrom(stage);
+                stage.update();
+            });
+
+            stage.update();
+
+        }, null, true); // end of ready - only run once (true)
+        </script>
+    </head>
+
+    <body>
+    <!-- canvas with id="myCanvas" is made by zim Frame -->
+    </body>
+</html>
